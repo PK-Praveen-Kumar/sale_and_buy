@@ -15,6 +15,7 @@ const Nav = () => {
       
         <Link to="/Login" >Login</Link>
         
+        <Link to="/Signup" >signup</Link>
         </div>
         
         </ul>
