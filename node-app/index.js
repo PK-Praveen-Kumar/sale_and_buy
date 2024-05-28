@@ -1,5 +1,9 @@
 console.log("hello world");
 
+// install mongoose 
+// install corns 
+
+
 const express = require('express')
 var bodyParser = require('body-parser')
 var cors = require('cors')
@@ -25,6 +29,30 @@ app.post('/signup', (req, res) => {
   const user = new User({ username: username, password:password });
   user.save().then(() => {
     res.send( {message : "success"})
+  }).catch(() => {
+      res.send({ message: "err"})
+  })
+})
+
+app.post('/login', (req, res) => {
+  console.log(req.body)
+  const username = req.body.username;
+  const password = req.body.password;
+  User.findOne({username : username})
+  .then((result) => {
+    console.log(result , "user data")
+    if(!result){
+      res.send({ message: "user not find"})
+    }else{
+      if( result.password == password){
+        res.send( {message : "find user data"})
+      }
+      else{
+        res.send( {message : "password worng"})
+      }
+
+    }
+   
   }).catch(() => {
       res.send({ message: "err"})
   })

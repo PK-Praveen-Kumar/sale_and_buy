@@ -9,16 +9,24 @@ const Signup = () => {
 
    
    const handlecheck =() =>{
+    if( username , password){
     console.log({username , password })
     const url = 'http://localhost:4000/signup/'
     const Data = { username , password }
-    axios.post(url , Data)
+    axios.post(url , Data) // install axios using node
     .then((res) =>{
-      console.log(res)
+      console.log(res.data)
+      if(res.data.message){
+        alert("data posted")
+      }
     
    }).catch((err) => {
       console.log(err)
-   })
+      alert('server err')
+   })}
+   else{
+     alert('give data')
+   }
    }
 
   return (
