@@ -9,13 +9,14 @@ const Signup = () => {
 
    
    const handlecheck =() =>{
-    console.log(username , password)
-    const url = "http://localhost:4000/signup"
+    console.log({username , password })
+    const url = 'http://localhost:4000/signup/'
     const Data = { username , password }
-    axios.post(url,Data).then(() =>{
+    axios.post(url , Data)
+    .then((res) =>{
       console.log(res)
     
-   }).catch(() => {
+   }).catch((err) => {
       console.log(err)
    })
    }
@@ -25,13 +26,13 @@ const Signup = () => {
     <Nav />
 
     <div>
-    <form class="login-form">
+   
      
       <input type="text" value={username} onChange={(e) => { setusername( e.target.value )}}  placeholder="username" /> <br />
      
       <input type="password" value={password} onChange={(e) => { setpassword( e.target.value)}}  placeholder="Password" /> <br />
       <button type='submite' onClick={handlecheck}>Signup</button>
-    </form>
+    
         <Link to="./Login" >Login</Link>   
         </div>
     </div>

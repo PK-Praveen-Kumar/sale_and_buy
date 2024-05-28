@@ -18,12 +18,16 @@ app.get('/', (req, res) => {
   res.send('Hello Honey!')
 })
 
-app.get('/signup', (req, res) => {
+app.post('/signup', (req, res) => {
   console.log(req.body)
   const username = req.body.username;
   const password = req.body.password;
-  const user = new User({ username: username, password: password });
-  user.save().then(() => console.log('saved'));
+  const user = new User({ username: username, password:password });
+  user.save().then(() => {
+    res.send( {message : "success"})
+  }).catch(() => {
+      res.send({ message: "err"})
+  })
 })
 
 app.listen(port, () => {
