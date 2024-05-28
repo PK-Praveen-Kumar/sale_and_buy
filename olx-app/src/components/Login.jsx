@@ -15,11 +15,14 @@ const Login = () => {
       const url = 'http://localhost:4000/login'
       const Data = { username , password }
       axios.post(url , Data)
-      .then((res) =>{
-        console.log(res.data)
-        if(res.data.message){
-          alert(res.data.message)
-        }
+       .then((res) =>{
+         console.log(res.data)
+         if(res.data.message){
+          if(res.data.token){
+             localStorage.setItem('token' , res.data.token)
+          }
+           alert(res.data.message)
+          }
       
      }).catch((err) => {
         console.log(err)

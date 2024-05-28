@@ -1,12 +1,13 @@
 console.log("hello world");
 
-// install mongoose 
-// install corns 
-
+// install npm install mongoose 
+// install npm install corns 
+// install npm install jsonwebtoken
 
 const express = require('express')
 var bodyParser = require('body-parser')
 var cors = require('cors')
+var jwt = require('jsonwebtoken');
 const app = express()
 const port = 4000
 app.use(bodyParser.json())
@@ -45,7 +46,11 @@ app.post('/login', (req, res) => {
       res.send({ message: "user not find"})
     }else{
       if( result.password == password){
-        res.send( {message : "find user data"})
+        const token = jwt.sign({
+          data: result
+        }, 'MYTOKEN', { expiresIn: '1h' });
+        console.log({ message :" password curract"})
+        res.send( {message : "find user data" , token : token })
       }
       else{
         res.send( {message : "password worng"})
@@ -53,7 +58,7 @@ app.post('/login', (req, res) => {
 
     }
    
-  }).catch(() => {
+  }).catch(() => { 
       res.send({ message: "err"})
   })
 })
