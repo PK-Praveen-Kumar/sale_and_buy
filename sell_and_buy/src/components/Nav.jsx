@@ -9,13 +9,19 @@ const Nav = () => {
           <p>nav</p>
         </div>
         <div className='nav-button'>
-       
+
         <Link to="/Home" >Home</Link>
-    
+       
       
-        <Link to="/Login" >Login</Link>
+           <Link to="/Login" >Login</Link> : <div ></div>
+       
+       
+     
+         <Link to="/Signup" >signup</Link>
+       
         
-        <Link to="/Signup" >signup</Link>
+        
+       
         </div>
         
         </ul>
