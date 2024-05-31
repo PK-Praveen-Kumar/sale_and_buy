@@ -1,0 +1,63 @@
+import React, { useState , useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
+
+const Add_product = () => {
+    const navigate = useNavigate();
+     useEffect(() => {
+        if(!localStorage.getItem('token')){
+          navigate('/login')
+        }
+     },[])
+    const [pname , setpname] = useState('')
+    const [pdescription , setpdescription] = useState('')
+    const [pprice , setpprice] = useState('')
+    const [pcategory , setpcategory] = useState('')
+    const [pimage , setpimage] = useState('')
+
+    const handleapi =() => {
+
+    }
+
+    console.log(pname)
+  return (
+    <div>
+        <div>
+            <label htmlFor="pname">Product Name</label><br />
+            <input type="text" name="product_name" id='pname' value={pname} onChange={(e) => {
+                setpname(e.target.value)
+            }} />
+        </div>
+        <div>
+            <label htmlFor="pname">Product Description</label> <br />
+            <input type="text" name="product_name" id='pname' value={pdescription}  onChange={(e) => {
+                setpdescription(e.target.value)
+            }} />
+        </div>
+        <div>
+            <label htmlFor="pname">Product Price</label><br />
+            <input type="text" name="product_name" id='pname'  value={pprice}  onChange={(e) => {
+                setpprice(e.target.value)
+            }} />
+        </div>
+        <div>
+            <label htmlFor="pname">Product category</label><br />
+            <input type="text" name="product_name" id='pname' value={pcategory}  onChange={(e) => {
+                setpcategory(e.target.value)
+            }}  />
+        </div>
+        <div>
+            <label htmlFor="pname">Product Image</label><br />
+            <input type="file" name="product_name" id='pname' onChange={ (e) => {
+                setpimage(e.target.files[0])
+            }}
+                /> <br />
+        </div>
+        <div>
+            <button type='submit' onClick={handleapi}>Submit</button>
+        </div>
+
+    </div>
+  )
+}
+
+export default Add_product
