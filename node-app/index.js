@@ -1,23 +1,45 @@
 console.log("hello world");
-
-// install npm install mongoose 
-// install npm install corns 
-// install npm install jsonwebtoken
-
 const express = require('express')
-var bodyParser = require('body-parser')
-var cors = require('cors')
-var jwt = require('jsonwebtoken');
 const app = express()
 const port = 4000
+
+
+var bodyParser = require('body-parser')
+// install npm install corns 
+var cors = require('cors')
+// install npm install jsonwebtoken
+var jwt = require('jsonwebtoken');
+// install npm install multer
+const multer  = require('multer')
+//image displaing code
+const path = require('path')
+
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'uploads')
+  },
+  filename: function (req, file, cb) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+    cb(null, file.fieldname + '-' + uniqueSuffix)
+  }
+})
+
+const upload = multer({ storage: storage })
+
+
+
+
+app.use('/uploads', express.static(path.join(__dirname, "uploads")))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 const mongoose = require('mongoose');
 app.use(cors())
-
+// install npm install mongoose 
 mongoose.connect('mongodb://localhost:27017/');
 
 const User = mongoose.model('User', { username: String , password: String});
+const Product = mongoose.model('Product', { pname: String , pdescription: String , pprice : String , pcategoty : String , pimage : String })
 
 app.get('/', (req, res) => {
   res.send('Hello Honey!')
@@ -57,11 +79,41 @@ app.post('/login', (req, res) => {
       }
 
     }
-   
+
   }).catch(() => { 
       res.send({ message: "err"})
   })
 })
+
+app.post('/add-product',upload.single('pimage'), (req, res) => {
+//   console.log(req.body)
+ const pname = req.body.pname;
+ const pdescription = req.body. pdescription;
+ const pprice = req.body.pprice;
+ const pcategory = req.body.pcategory;
+ const pimage = req.file.path;
+ const product = new Product({pname , pdescription ,  pprice , pcategory , pimage})
+  product.save()
+  .then(() =>{
+    res.send({message:"product uploaded"})
+  })
+  .catch(() =>{
+    res.send({message : "server err"})
+  })
+
+})
+
+app.get('/get-product', (req , res ) =>{
+
+    Product.find()
+    .then((result) =>{
+      console.log(result , "user data")
+      res.send({message : "success" , product : result })
+    }) 
+    .catch( (result) =>{
+    res.send({message : "server err"})
+    })
+} )
 
 app.listen(port, () => {
    console.log(`Example app listening on port ${port}`)

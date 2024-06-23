@@ -1,5 +1,8 @@
 import React, { useState , useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { Link } from 'react-router-dom'
+
 
 const Add_product = () => {
     const navigate = useNavigate();
@@ -8,6 +11,7 @@ const Add_product = () => {
           navigate('/login')
         }
      },[])
+
     const [pname , setpname] = useState('')
     const [pdescription , setpdescription] = useState('')
     const [pprice , setpprice] = useState('')
@@ -15,10 +19,22 @@ const Add_product = () => {
     const [pimage , setpimage] = useState('')
 
     const handleapi =() => {
-
+        const formdata = new FormData();
+        formdata.append("pname" , pname)
+        formdata.append("pdescription" , pdescription)
+        formdata.append("pprice" , pprice)
+        formdata.append("pcategoty" , pcategory)
+        formdata.append("pimage" , pimage)
+        const url = 'http://localhost:4000/add-product'
+        axios.post(url,formdata)
+        .then((res) => {
+                console.log(res)
+        }) .catch((err) =>{
+                console.log(err)
+        })
     }
 
-    console.log(pname)
+    console.log(pcategory)
   return (
     <div>
         <div>
@@ -53,7 +69,11 @@ const Add_product = () => {
                 /> <br />
         </div>
         <div>
-            <button type='submit' onClick={handleapi}>Submit</button>
+            <button type='submit'  onClick={handleapi}>Submit</button>
+        </div>
+
+        <div>
+            <Link to="/Home">Product list</Link>
         </div>
 
     </div>

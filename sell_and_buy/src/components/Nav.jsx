@@ -3,33 +3,31 @@ import "../index.css"
 import { Link } from 'react-router-dom'
 const Nav = () => {
   return (
-    <div>
-        <ul className="shadow" >
-        <div>
+ <div>
+ <div className='nav'>
+        
+        <div className='nav-hline'>
           <p>nav</p>
         </div>
         <div className='nav-button'>
 
-        <Link to="/Home" >Home</Link>
+            <Link className='nav-link' to="/Home" >Home</Link>
        
-      
-           <Link to="/Login" >Login</Link> : <div ></div>
-       
-       
-     
-         <Link to="/Signup" >signup</Link>
-       
+            <Link className='nav-link' to="/Login" >Login</Link> 
+
+            <Link className='nav-link' to="/Signup" >signup</Link>
         
-        
-       
         </div>
         
-        </ul>
-        <p>
+        
+        
+    </div>
+    <p>
           navigate to ...
           
         </p>
-    </div>
+ </div>
+   
   )
 }
 
