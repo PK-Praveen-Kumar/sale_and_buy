@@ -15,7 +15,6 @@ const Add_product = () => {
     const [pname , setpname] = useState('')
     const [pdescription , setpdescription] = useState('')
     const [pprice , setpprice] = useState('')
-    const [pcategory , setpcategory] = useState('')
     const [pimage , setpimage] = useState('')
 
     const handleapi =() => {
@@ -23,7 +22,6 @@ const Add_product = () => {
         formdata.append("pname" , pname)
         formdata.append("pdescription" , pdescription)
         formdata.append("pprice" , pprice)
-        formdata.append("pcategoty" , pcategory)
         formdata.append("pimage" , pimage)
         const url = 'http://localhost:4000/add-product'
         axios.post(url,formdata)
@@ -34,7 +32,7 @@ const Add_product = () => {
         })
     }
 
-    console.log(pcategory)
+    
   return (
     <div>
         <div>
@@ -54,12 +52,6 @@ const Add_product = () => {
             <input type="text" name="product_price" id='pname'  value={pprice}  onChange={(e) => {
                 setpprice(e.target.value)
             }} />
-        </div>
-        <div>
-            <label htmlFor="pname">Product category</label><br />
-            <input type="text" name="product_category" id='pname' value={pcategory}  onChange={(e) => {
-                setpcategory(e.target.value)
-            }}  />
         </div>
         <div>
             <label htmlFor="pname">Product Image</label><br />

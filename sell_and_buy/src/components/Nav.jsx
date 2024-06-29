@@ -14,7 +14,7 @@ const Nav = (props) => {
           <p>nav</p>
           <input type="text" placeholder='search'  value={props.search}
           onChange={(e) => props.handlesearch(e.target.value)}/>
-          <button onClick={(e) => {props.handleclick(e.target.value)}}>search</button>
+          <button onClick={(e) => {props.handleclick( e.target.value)}}>search</button>
         </div>
         <div className='nav-button'>
 

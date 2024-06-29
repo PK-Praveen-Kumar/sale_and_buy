@@ -39,7 +39,7 @@ app.use(cors())
 mongoose.connect('mongodb://localhost:27017/');
 
 const User = mongoose.model('User', { username: String , password: String});
-const Product = mongoose.model('Product', { pname: String , pdescription: String , pprice : String , pcategory : String , pimage : String })
+const Product = mongoose.model('Product', { pname: String , pdescription: String , pprice : String , pimage : String })
 
 app.get('/', (req, res) => {
   res.send('Hello Honey!')
@@ -90,9 +90,8 @@ app.post('/add-product',upload.single('pimage'), (req, res) => {
  const pname = req.body.pname;
  const pdescription = req.body. pdescription;
  const pprice = req.body.pprice;
- const pcategory = req.body.pcategory ;
  const pimage = req.file.path;
- const product = new Product({pname , pdescription ,  pprice , pcategory , pimage})
+ const product = new Product({pname , pdescription ,  pprice , pimage})
   product.save()
   .then(() =>{
     res.send({message:"product uploaded"})
@@ -110,7 +109,7 @@ app.get('/get-product', (req , res ) =>{
       console.log(result , "user data")
       res.send({message : "success" , product : result })
     }) 
-    .catch( (result) =>{
+    .catch( () =>{
     res.send({message : "server err"})
     })
 } )
