@@ -45,25 +45,25 @@ const Add_product = () => {
         </div>
         <div>
             <label htmlFor="pname">Product Description</label> <br />
-            <input type="text" name="product_name" id='pname' value={pdescription}  onChange={(e) => {
+            <input type="text" name="product_discription" id='pname' value={pdescription}  onChange={(e) => {
                 setpdescription(e.target.value)
             }} />
         </div>
         <div>
             <label htmlFor="pname">Product Price</label><br />
-            <input type="text" name="product_name" id='pname'  value={pprice}  onChange={(e) => {
+            <input type="text" name="product_price" id='pname'  value={pprice}  onChange={(e) => {
                 setpprice(e.target.value)
             }} />
         </div>
         <div>
             <label htmlFor="pname">Product category</label><br />
-            <input type="text" name="product_name" id='pname' value={pcategory}  onChange={(e) => {
+            <input type="text" name="product_category" id='pname' value={pcategory}  onChange={(e) => {
                 setpcategory(e.target.value)
             }}  />
         </div>
         <div>
             <label htmlFor="pname">Product Image</label><br />
-            <input type="file" name="product_name" id='pname' onChange={ (e) => {
+            <input type="file" name="product_image" id='pname' onChange={ (e) => {
                 setpimage(e.target.files[0])
             }}
                 /> <br />

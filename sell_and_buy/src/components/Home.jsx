@@ -1,10 +1,15 @@
 import React from 'react'
 import { useState , useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link , useLocation } from 'react-router-dom'
 import axios from 'axios';
+import Nav from '../components/Nav'
+
 const Home = () => {
    const [products , setproducts] = useState([])
-   
+   const [search , setsearch] = useState('')
+
+   const location = useLocation();
+  const isAboutPage = location.pathname === '/';
 
    useEffect(() => {
     const url = 'http://localhost:4000/get-product'
@@ -19,16 +24,45 @@ const Home = () => {
                 alert( "server err")
         })
   },[])
+  const handlesearch = (e) => {
+    setsearch(e)
+  }
+
+  const handleclick =() => {
+    
+    let filterproducts = products.filter((item) =>{
+      if(item.pname.toLowerCase().includes(search.toLowerCase()) ){
+        return item
+        
+      }
+      
+     
+    })
+    setproducts(filterproducts)
+  }
+  const refrush = () => {
+    setsearch('')
+    window.location.reload();
+  }
 
   return (
     <div>
-
-    <h1>welcome home</h1>
-
-    <Link to="/">HOME</Link>
+      <Nav handlesearch={handlesearch} handleclick={handleclick} search={search} />
+ 
+    {!isAboutPage && (
+          <li>
+           <Link to="/">HOME</Link>
+          </li>
+        )}
+     {products && products.length === 0 && (
+      <div>
+          <h1>Item not found</h1>
+          <button onClick={() => refrush() }>refrush</button>
+          </div >
+        )}
     {products && products.length > 0 && products.map((item , index) => {
       return (
-         <div >
+         <div key={index} >
           <img src={'http://localhost:4000/' + item.pimage} width="500px" />
           <p > NAME :{item.pname}</p>
           <p> DESCRIPTION :{item.pdescription}</p>

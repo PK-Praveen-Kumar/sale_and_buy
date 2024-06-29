@@ -1,13 +1,13 @@
 
 import './index.css'
-import Nav from './components/Nav'
 
+import Home from './components/Home.jsx';
 function App() {
 
   return (
     <>
-    <Nav />
     
+    <Home />
     </>
   )
 }
