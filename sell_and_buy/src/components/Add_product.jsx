@@ -12,14 +12,21 @@ const Add_product = () => {
         }
      },[])
 
-    const [pname , setpname] = useState('')
-    const [pdescription , setpdescription] = useState('')
+     const [pname , setpname] = useState('')
+     const [pcategory , setpcategory] = useState('')
+     const [pdescription , setpdescription] = useState('')
     const [pprice , setpprice] = useState('')
     const [pimage , setpimage] = useState('')
+
+    
+    const options = [
+        'bike' , 'Electronics' , 'cloth' , 'sale' , 'mobiles'
+    ];
 
     const handleapi =() => {
         const formdata = new FormData();
         formdata.append("pname" , pname)
+        formdata.append("pcategory", pcategory)
         formdata.append("pdescription" , pdescription)
         formdata.append("pprice" , pprice)
         formdata.append("pimage" , pimage)
@@ -32,7 +39,14 @@ const Add_product = () => {
         })
     }
 
-    
+    const onOptionChangeHandler = (event) => {
+        setpcategory(event.target.value);
+        console.log(
+            "User Selected Value - ",
+            event.target.value
+        );
+    };
+
   return (
     <div>
         <div>
@@ -40,6 +54,33 @@ const Add_product = () => {
             <input type="text" name="product_name" id='pname' value={pname} onChange={(e) => {
                 setpname(e.target.value)
             }} />
+        </div>
+        <div>
+        <select onChange={onOptionChangeHandler } >
+                <option>Product category</option>
+                {options.map((option, index) => {
+                    return (
+                        <option key={index}>
+                            {option}
+                        </option>
+                    );
+                })}
+            </select>
+
+        {/* <label for="cars">Choose a car:</label>
+  <select name="cars" id="cars">
+    <option value="">bike</option>
+    <option value="saab">Electronics</option>
+    <option value="opel">cloth</option>
+    <option value="audi">mobiles</option>
+    <option value="audi">other</option>
+  </select> */}
+
+            {/* <label htmlFor="pcategory">Product Category</label><br />
+            <input type="text" name="product_categoty" id='pcategory' value={pcategory} onChange={(e) => {
+                setpcategory(e.target.value)
+            }} />
+         */}
         </div>
         <div>
             <label htmlFor="pname">Product Description</label> <br />

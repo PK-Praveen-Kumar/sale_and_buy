@@ -3,7 +3,7 @@ import { useState , useEffect } from 'react'
 import { Link , useLocation } from 'react-router-dom'
 import axios from 'axios';
 import Nav from '../components/Nav'
-
+import Categories from './Categories';
 const Home = () => {
    const [products , setproducts] = useState([])
    const [search , setsearch] = useState('')
@@ -32,8 +32,7 @@ const Home = () => {
     
     let filterproducts = products.filter((item) =>{
       if(item.pname.toLowerCase().includes(search.toLowerCase()) ){
-        return item
-        
+        return item        
       }
       
      
@@ -45,15 +44,26 @@ const Home = () => {
     window.location.reload();
   }
 
+  const handleCategory = (value) => {
+    console.log(value)
+    let filterproducts = products.filter((item) =>{
+      if(item.pcategory == value ){
+        return item        
+      }
+    })
+    setproducts(filterproducts)
+  }
+
   return (
     <div>
       <Nav handlesearch={handlesearch} handleclick={handleclick} search={search} />
- 
+      <Categories handleCategory ={handleCategory}/>
     {!isAboutPage && (
           <li>
            <Link to="/">HOME</Link>
           </li>
         )}
+    
      {products && products.length === 0 && (
       <div>
           <h1>Item not found</h1>
@@ -65,6 +75,7 @@ const Home = () => {
          <div key={index} >
           <img src={'http://localhost:4000/' + item.pimage} width="500px" />
           <p > NAME :{item.pname}</p>
+          <p > CATEGORY :{item.pcategory}</p>
           <p> DESCRIPTION :{item.pdescription}</p>
           <p> PRICE :{item.pprice}</p>
           </div>
