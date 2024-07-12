@@ -4,6 +4,9 @@ import { Link , useLocation } from 'react-router-dom'
 import axios from 'axios';
 import Nav from '../components/Nav'
 import Categories from './Categories';
+import { AiFillLike } from 'react-icons/ai';
+
+
 const Home = () => {
    const [products , setproducts] = useState([])
    const [search , setsearch] = useState('')
@@ -54,6 +57,19 @@ const Home = () => {
     setproducts(filterproducts)
   }
 
+  const handleLike = (productId) => {
+    let userId = localStorage.getItem('userId')
+    console.log("liked" , productId , userId)
+    const data = {userId , productId}
+    const url = 'http://localhost:4000/like-product'
+    axios.post(url , data)
+        .then((res) => {
+                console.log(res)
+        }) .catch((err) =>{
+                console.log(err)
+                alert( "server err")
+        })
+  }
   return (
     <div>
       <Nav handlesearch={handlesearch} handleclick={handleclick} search={search} />
@@ -74,7 +90,8 @@ const Home = () => {
       return (
          <div key={index} >
           <img src={'http://localhost:4000/' + item.pimage} width="500px" />
-          <p > NAME :{item.pname}</p>
+          <p > NAME :{item.pname}</p> 
+          <AiFillLike onClick={()=>handleLike(item._id)} size="30" className='like-buton' />
           <p > CATEGORY :{item.pcategory}</p>
           <p> DESCRIPTION :{item.pdescription}</p>
           <p> PRICE :{item.pprice}</p>

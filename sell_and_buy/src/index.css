@@ -24,3 +24,11 @@
 .nav-link{
     padding: 10px;
 }
+.like-buton{
+    color: rgb(139, 139, 139);
+    
+}
+.like-buton:hover{
+    color: red;
+    cursor: pointer;
+}

@@ -20,7 +20,7 @@ const Add_product = () => {
 
     
     const options = [
-        'bike' , 'Electronics' , 'cloth' , 'sale' , 'mobiles'
+        'bike' , 'Electronics' , 'cloth' , 'sale' , 'mobiles','other~'
     ];
 
     const handleapi =() => {
@@ -67,14 +67,7 @@ const Add_product = () => {
                 })}
             </select>
 
-        {/* <label for="cars">Choose a car:</label>
-  <select name="cars" id="cars">
-    <option value="">bike</option>
-    <option value="saab">Electronics</option>
-    <option value="opel">cloth</option>
-    <option value="audi">mobiles</option>
-    <option value="audi">other</option>
-  </select> */}
+    
 
             {/* <label htmlFor="pcategory">Product Category</label><br />
             <input type="text" name="product_categoty" id='pcategory' value={pcategory} onChange={(e) => {

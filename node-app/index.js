@@ -38,7 +38,11 @@ app.use(cors())
 // install npm install mongoose 
 mongoose.connect('mongodb://localhost:27017/');
 
-const User = mongoose.model('User', { username: String , password: String});
+const User = mongoose.model('User', {
+   username: String ,
+   password: String,
+   likedProducts : [{type : mongoose.Schema.Types.ObjectId, ref : 'products'}]
+  });
 const Product = mongoose.model('Product', { pname: String, pcategory: String , pdescription: String , pprice : String , pimage : String })
 
 app.get('/', (req, res) => {
@@ -72,7 +76,7 @@ app.post('/login', (req, res) => {
           data: result
         }, 'MYTOKEN', { expiresIn: '1h' });
         console.log({ message :" password curract"})
-        res.send( {message : "find user data" , token : token })
+        res.send( {message : "find user data" , token : token , userId : result._id })
       }
       else{
         res.send( {message : "password worng"})
@@ -83,6 +87,20 @@ app.post('/login', (req, res) => {
   }).catch(() => { 
       res.send({ message: "err"})
   })
+})
+
+app.post('/like-product', (req, res)=>{
+  let productId = req.body.productId;
+  let userId = req.body.userId
+ console.log(req.body)
+  User.updateOne({_id: userId} , {$addToSet : {likedProducts : productId }})
+  .then(() =>{
+    res.send({message:"Liked"})
+  })
+  .catch(() =>{
+    res.send({message : "server err"})
+  })
+
 })
 
 app.post('/add-product',upload.single('pimage'), (req, res) => {
