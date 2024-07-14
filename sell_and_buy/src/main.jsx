@@ -9,7 +9,7 @@ import Home from './components/Home.jsx';
 import Signup from './components/Signup.jsx';
 import Main_page from './components/Main_page.jsx';
 import Add_product from './components/Add_product.jsx';
-
+import Liked_products from './components/Likedproducts.jsx';
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
@@ -22,6 +22,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path='/signup' element={<Signup />} />
         <Route path='/main_page' element={<Main_page />} />
         <Route path='/Add_product' element={<Add_product /> } />
+        <Route path='/liked_products' element={<Liked_products /> } />
+
+
       </Routes>
     </BrowserRouter>
     

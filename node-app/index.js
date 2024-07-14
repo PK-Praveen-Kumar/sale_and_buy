@@ -41,7 +41,7 @@ mongoose.connect('mongodb://localhost:27017/');
 const User = mongoose.model('User', {
    username: String ,
    password: String,
-   likedProducts : [{type : mongoose.Schema.Types.ObjectId, ref : 'products'}]
+   likedProducts: [{type : mongoose.Schema.Types.ObjectId, ref : 'products'}]
   });
 const Product = mongoose.model('Product', { pname: String, pcategory: String , pdescription: String , pprice : String , pimage : String })
 
@@ -132,6 +132,21 @@ app.get('/get-product', (req , res ) =>{
     res.send({message : "server err"})
     })
 } )
+
+app.post('/liked-product', (req , res ) =>{
+  console.log({_id : req.body.userId}   )
+  User.findOne({ _id : req.body.userId})
+  .then((result) =>{
+    console.log(result , "user data")
+    res.send({message : "success" , product : result.likedProducts })
+  }) 
+  .catch( () =>{
+  res.send({message : "server err"})
+  })
+} )
+
+
+
 
 app.listen(port, () => {
    console.log(`Example app listening on port ${port}`)
