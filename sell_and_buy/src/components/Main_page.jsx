@@ -11,7 +11,6 @@ const Main_page = () => {
      const handlelogout =() => {
           localStorage.removeItem('token')
           localStorage.removeItem('userId')
-
           window.location.reload();
           
      }

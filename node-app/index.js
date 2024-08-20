@@ -41,7 +41,7 @@ mongoose.connect('mongodb://localhost:27017/');
 const User = mongoose.model('User', {
    username: String ,
    password: String,
-   likedProducts: [{type : mongoose.Schema.Types.ObjectId, ref : 'products'}]
+   likedProducts:  [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }]
   });
 const Product = mongoose.model('Product', { pname: String, pcategory: String , pdescription: String , pprice : String , pimage : String })
 
@@ -133,19 +133,37 @@ app.get('/get-product', (req , res ) =>{
     })
 } )
 
-app.post('/liked-product', (req , res ) =>{
-  console.log({_id : req.body.userId}   )
-  User.findOne({ _id : req.body.userId})
+app.get('/search', (req , res) => {
+  let search = req.query.search
+  Product.find({
+    $or :[
+      {pname : {$regex : search}},
+      {pprice : {$regex : search}},
+      {pdescription : {$regex : search}},
+      {pcategory : {$regex : search}},
+
+    ]
+  })
   .then((result) =>{
     console.log(result , "user data")
-    res.send({message : "success" , product : result.likedProducts })
+    res.send({message : "success" , product : result })
+  }) 
+  .catch( () =>{
+  res.send({message : "server err"})
+  })
+})
+
+app.get('/get-products/:pId', (req , res ) =>{
+  console.log(req.params)
+  Product.findOne({_id : req.params.pId})
+  .then((result) =>{
+    console.log(result , "user data")
+    res.send({message : "success" , product : result })
   }) 
   .catch( () =>{
   res.send({message : "server err"})
   })
 } )
-
-
 
 
 app.listen(port, () => {

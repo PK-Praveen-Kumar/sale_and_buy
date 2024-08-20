@@ -13,7 +13,7 @@ const Signup = () => {
     console.log({username , password })
     const url = 'http://localhost:4000/signup/'
     const Data = { username , password }
-    axios.post(url , Data) // install axios using node
+    axios.post(url , Data) // install axios for connecting database script
     .then((res) =>{
       console.log(res.data)
       if(res.data.message){

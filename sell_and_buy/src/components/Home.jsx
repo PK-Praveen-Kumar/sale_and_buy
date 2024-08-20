@@ -1,15 +1,18 @@
 import React from 'react'
-import { useState , useEffect } from 'react'
+import { useState , useEffect  } from 'react'
 import { Link , useLocation } from 'react-router-dom'
 import axios from 'axios';
 import Nav from '../components/Nav'
 import Categories from './Categories';
 import { AiFillLike } from 'react-icons/ai';
-
+import { useNavigate } from 'react-router-dom'
 
 const Home = () => {
    const [products , setproducts] = useState([])
    const [search , setsearch] = useState('')
+ 
+   const navigate = useNavigate();
+
 
    const location = useLocation();
   const isAboutPage = location.pathname === '/';
@@ -27,21 +30,25 @@ const Home = () => {
                 alert( "server err")
         })
   },[])
+
   const handlesearch = (e) => {
     setsearch(e)
   }
 
   const handleclick =() => {
+    const url = 'http://localhost:4000/search?search=' + search
+    axios.get(url)
+        .then((res) => {
+                console.log(res.data.product)
+                setproducts(res.data.product)
+        }) .catch((err) =>{
+                console.log(err)
+                alert( "server err")
+        })
     
-    let filterproducts = products.filter((item) =>{
-      if(item.pname.toLowerCase().includes(search.toLowerCase()) ){
-        return item        
-      }
-      
-     
-    })
-    setproducts(filterproducts)
   }
+
+
   const refrush = () => {
     setsearch('')
     window.location.reload();
@@ -70,6 +77,10 @@ const Home = () => {
                 alert( "server err")
         })
   }
+
+  const handleProduct =(id) =>{
+    navigate('/Product-details/' + id)
+  }
   return (
     <div>
       <Nav handlesearch={handlesearch} handleclick={handleclick} search={search} />
@@ -88,7 +99,7 @@ const Home = () => {
         )}
     {products && products.length > 0 && products.map((item , index) => {
       return (
-         <div key={index} >
+         <div onClick={() => handleProduct(item._id)} key={index} >
           <img src={'http://localhost:4000/' + item.pimage} width="500px" />
           <p > NAME :{item.pname}</p> 
           <AiFillLike onClick={()=>handleLike(item._id)} size="30" className='like-buton' />

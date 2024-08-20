@@ -10,27 +10,18 @@ import { AiFillLike } from 'react-icons/ai';
 const Home = () => {
    const [products , setproducts] = useState([])
    const [search , setsearch] = useState('')
+    const [items , setItems] = useState('')
+    const location = useLocation();
+    const isAboutPage = location.pathname === '/';
 
-   const location = useLocation();
-  const isAboutPage = location.pathname === '/';
+   
 
-   useEffect(() => {
-    const url = 'http://localhost:4000/liked-product'
-    const data = {userId : localStorage.getItem('userId')}
-    axios.post(url , data)
-        .then((res) => {
-                console.log(res)
-                if(res.data.product){
-                  setproducts(res.data.product)
-                }
-        }) .catch((err) =>{
-                console.log(err)
-                alert( "server err")
-        })
-  },[])
+  
+  console.log(items)
   const handlesearch = (e) => {
     setsearch(e)
   }
+
 
   const handleclick =() => {
     
