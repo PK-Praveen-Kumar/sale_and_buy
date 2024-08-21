@@ -11,6 +11,7 @@ import Main_page from './components/Main_page.jsx';
 import Add_product from './components/Add_product.jsx';
 import Liked_products from './components/Likedproducts.jsx';
 import ProductDetails from './components/ProductDetails.jsx';
+import Categoriepage from './components/Categoriepage.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
@@ -18,6 +19,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       
       <Routes>
         <Route path="/" element={<App />} />
+        <Route path="/categorie/:catname" element={<Categoriepage/>} />
+
         <Route path="/Login" element={<Login />} />
         <Route path='/Nav' element={<Nav />} />
         <Route path='/Home' element={<Home />} />

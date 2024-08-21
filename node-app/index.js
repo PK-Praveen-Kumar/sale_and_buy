@@ -34,6 +34,7 @@ app.use('/uploads', express.static(path.join(__dirname, "uploads")))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 const mongoose = require('mongoose');
+const { default: categories } = require('../sell_and_buy/src/components/Categories');
 app.use(cors())
 // install npm install mongoose 
 mongoose.connect('mongodb://localhost:27017/');
@@ -122,6 +123,7 @@ app.post('/add-product',upload.single('pimage'), (req, res) => {
 })
 
 app.get('/get-product', (req , res ) =>{
+   
 
     Product.find()
     .then((result) =>{
