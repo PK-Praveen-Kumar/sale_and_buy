@@ -30,6 +30,7 @@ const Add_product = () => {
         formdata.append("pdescription" , pdescription)
         formdata.append("pprice" , pprice)
         formdata.append("pimage" , pimage)
+        formdata.append('userId' , localStorage.getItem('userId'))
         const url = 'http://localhost:4000/add-product'
         axios.post(url,formdata)
         .then((res) => {
@@ -38,6 +39,7 @@ const Add_product = () => {
                 console.log(err)
         })
     }
+    console.log(localStorage.getItem('userId'))
 
     const onOptionChangeHandler = (event) => {
         setpcategory(event.target.value);

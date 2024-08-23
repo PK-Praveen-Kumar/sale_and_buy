@@ -4,6 +4,9 @@ import { useEffect } from 'react'
 import axios from 'axios'
 function ProductDetails() {
     const [products , setproducts] = useState('')
+    const [user , setuser] = useState('')
+
+    
     const p = useParams()
     console.log(p)
 
@@ -22,6 +25,20 @@ function ProductDetails() {
             })
       },[])
 
+      const handlecontact = (addedBy) => {
+        console.log('userId',addedBy)
+        const url = 'http://localhost:4000/get-user/' + addedBy;
+        axios.get(url)
+            .then((res) => {
+                    console.log(res)
+                    setuser(res.data.User)
+            }) .catch((err) =>{
+                    console.log(err)
+                    alert( "server err")
+            })
+
+      }
+
       console.log(products.pname)
 
   return (
@@ -35,6 +52,9 @@ function ProductDetails() {
             <p > CATEGORY :{products.pcategory}</p>
             <p> DESCRIPTION :{products.pdescription}</p>
             <p> PRICE :{products.pprice}</p>
+
+            <button onClick={()=>handlecontact(products.addedBy)}>show contact</button>
+            {user.username && <h2>{user.username}</h2>}
             </div>
         
       }

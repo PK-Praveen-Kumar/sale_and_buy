@@ -20,7 +20,7 @@ const Categoriepage = () => {
   const isAboutPage = location.pathname === '/';
 
    useEffect(() => {
-    const url = 'http://localhost:4000/get-product'
+    const url = 'http://localhost:4000/get-product?catname=' + params.catname
     axios.get(url) 
         .then((res) => {
                 console.log(res)
@@ -31,7 +31,7 @@ const Categoriepage = () => {
                 console.log(err)
                 alert( "server err")
         })
-  },[])
+  },[params])
 
   const handlesearch = (e) => {
     setsearch(e)

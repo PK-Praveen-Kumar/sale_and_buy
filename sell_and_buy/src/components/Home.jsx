@@ -97,10 +97,10 @@ const Home = () => {
           <button onClick={() => refrush() }>refrush</button>
           </div >
         )}
-    {products && products.length > 0 && products.map((item , index) => {
+    {products.map((item , index) => {
       return (
          <div onClick={() => handleProduct(item._id)} key={index} >
-          <img src={'http://localhost:4000/' + item.pimage} width="500px" />
+          <img src={'http://localhost:4000/' + item.pimage} width="100px" />
           <p > NAME :{item.pname}</p> 
           <AiFillLike onClick={()=>handleLike(item._id)} size="30" className='like-buton' />
           <p > CATEGORY :{item.pcategory}</p>

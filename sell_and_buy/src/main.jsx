@@ -12,7 +12,6 @@ import Add_product from './components/Add_product.jsx';
 import Liked_products from './components/Likedproducts.jsx';
 import ProductDetails from './components/ProductDetails.jsx';
 import Categoriepage from './components/Categoriepage.jsx';
-
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
