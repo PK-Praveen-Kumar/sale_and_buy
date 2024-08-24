@@ -6,13 +6,15 @@ const Signup = () => {
 
    const [username , setusername] = useState('')
    const [password , setpassword] = useState('')
+   const [mobileno , setmobileno] = useState('')
+   const [email , setemail] = useState('')
 
    
    const handlecheck =() =>{
     if( username , password){
-    console.log({username , password })
+    console.log({username , password , mobileno , email })
     const url = 'http://localhost:4000/signup/'
-    const Data = { username , password }
+    const Data = { username , password , mobileno , email }
     axios.post(url , Data) // install axios for connecting database script
     .then((res) =>{
       console.log(res.data)
@@ -37,7 +39,17 @@ const Signup = () => {
    
      
       <input type="text" value={username} onChange={(e) => { setusername( e.target.value )}}  placeholder="username" /> <br />
-     
+
+      <input type="phone" value={mobileno} onChange={(e)=>{
+        setmobileno(e.target.value)
+      }
+      } placeholder='Mobile No'  />
+      <br />
+      <input type="email" value={email} onChange={(e)=>{
+        setemail(e.target.value)
+      }
+      } placeholder='email'  />
+      <br />
       <input type="password" value={password} onChange={(e) => { setpassword( e.target.value)}}  placeholder="Password" /> <br />
       <button type='submite' onClick={handlecheck}>Signup</button>
     

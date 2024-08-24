@@ -34,6 +34,7 @@ app.use('/uploads', express.static(path.join(__dirname, "uploads")))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 const mongoose = require('mongoose');
+const { readSync } = require('fs');
 // const { default: categories } = require('../sell_and_buy/src/components/Categories');
 app.use(cors())
 // install npm install mongoose 
@@ -42,6 +43,8 @@ mongoose.connect('mongodb://localhost:27017/');
 const User = mongoose.model('User', {
    username: String ,
    password: String,
+   mobileno: String,
+   email: String,
    likedProducts:  [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }]
   });
 const Product = mongoose.model('Product', { 
@@ -62,7 +65,10 @@ app.post('/signup', (req, res) => {
   console.log(req.body)
   const username = req.body.username;
   const password = req.body.password;
-  const user = new User({ username: username, password:password });
+  const mobileno = req.body.mobileno;
+  const email = req.body.email;
+
+  const user = new User({ username: username, password:password  ,  mobileno :mobileno , email:email});
   user.save().then(() => {
     res.send( {message : "success"})
   }).catch(() => {
@@ -136,9 +142,12 @@ console.log(req.body)
 app.get('/get-product', (req , res ) =>{
    
   const catname = req.query.catname
- 
+ let _f ={}
+ if(catname){
+  _f ={pcategory:catname}
+ }
   console.log(catname)
-    Product.find({ pcategory : catname})
+    Product.find(_f)
     .then((result) =>{
       console.log(result , "user data")
       res.send({message : "success" , product : result })
@@ -153,7 +162,11 @@ app.get('/get-user/:uId' , (req , res) =>{
   User.findOne({ _id : addedBy})
     .then((result) =>{
       console.log(result , "user data")
-      res.send({message : "success" , User : result })
+      res.send({message : "success" , User : {
+        email:result.email ,
+         mobileno:result.mobileno ,
+          username : result.username
+        }})
     }) 
     .catch( () =>{
     res.send({message : "server err"})

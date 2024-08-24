@@ -54,7 +54,11 @@ function ProductDetails() {
             <p> PRICE :{products.pprice}</p>
 
             <button onClick={()=>handlecontact(products.addedBy)}>show contact</button>
-            {user.username && <h2>{user.username}</h2>}
+            {user.username  && <h2>{user.username}</h2>}
+            {user.email  && <h2>{user.email}</h2>}
+            {user.mobileno  && <h2>{user.mobileno}</h2>}
+
+            
             </div>
         
       }
