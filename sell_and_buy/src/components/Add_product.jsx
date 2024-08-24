@@ -24,6 +24,9 @@ const Add_product = () => {
     ];
 
     const handleapi =() => {
+      navigator.geolocation.getCurrentPosition()
+        console.log(navigator)
+
         const formdata = new FormData();
         formdata.append("pname" , pname)
         formdata.append("pcategory", pcategory)
@@ -78,20 +81,20 @@ const Add_product = () => {
          */}
         </div>
         <div>
-            <label htmlFor="pname">Product Description</label> <br />
-            <input type="text" name="product_discription" id='pname' value={pdescription}  onChange={(e) => {
+            <label htmlFor="pdesc">Product Description</label> <br />
+            <input type="text" name="product_discription" id='pdesc' value={pdescription}  onChange={(e) => {
                 setpdescription(e.target.value)
             }} />
         </div>
         <div>
-            <label htmlFor="pname">Product Price</label><br />
-            <input type="text" name="product_price" id='pname'  value={pprice}  onChange={(e) => {
+            <label htmlFor="pprice">Product Price</label><br />
+            <input type="text" name="product_price" id='pprice'  value={pprice}  onChange={(e) => {
                 setpprice(e.target.value)
             }} />
         </div>
         <div>
-            <label htmlFor="pname">Product Image</label><br />
-            <input type="file" name="product_image" id='pname' onChange={ (e) => {
+            <label htmlFor="pimage">Product Image</label><br />
+            <input type="file" name="product_image" id='pimage' onChange={ (e) => {
                 setpimage(e.target.files[0])
             }}
                 /> <br />
