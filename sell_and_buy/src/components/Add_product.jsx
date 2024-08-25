@@ -1,5 +1,5 @@
 import React, { useState , useEffect } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate  } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom'
 
@@ -22,10 +22,14 @@ const Add_product = () => {
     const options = [
         'bike' , 'Electronics' , 'cloth' , 'sale' , 'mobiles','other~'
     ];
-
+  
+    
     const handleapi =() => {
-      navigator.geolocation.getCurrentPosition()
-        console.log(navigator)
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+              console.log('Latitude:', position.coords.latitude);
+              console.log('Longitude:', position.coords.longitude);
+            })
 
         const formdata = new FormData();
         formdata.append("pname" , pname)
