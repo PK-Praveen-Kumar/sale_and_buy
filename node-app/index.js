@@ -35,6 +35,8 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 const mongoose = require('mongoose');
 const { readSync } = require('fs');
+const { type } = require('os');
+const { Console } = require('console');
 // const { default: categories } = require('../sell_and_buy/src/components/Categories');
 app.use(cors())
 // install npm install mongoose 
@@ -47,14 +49,34 @@ const User = mongoose.model('User', {
    email: String,
    likedProducts:  [{ type: mongoose.Schema.Types.ObjectId, ref: 'Product' }]
   });
-const Product = mongoose.model('Product', { 
+
+
+// let schema = new mongoose.Schema({
+
+ 
+// })
+// schema.index({pLoc: '2dsphere'})
+
+const Product = mongoose.model('Product', {
   pname: String,
   pcategory: String ,
   pdescription: String ,
   pprice : String ,
   pimage : String ,
-  addedBy: mongoose.Schema.Types.ObjectId 
-     })
+  addedBy: mongoose.Schema.Types.ObjectId ,
+  pLoc  : {
+    type :{
+      type: String,
+      enum:['point'],
+      default:'point'
+    },
+    coordinates : {
+        type :[Number]
+
+    }
+  }
+})
+
 
 
 app.get('/', (req, res) => {
@@ -120,15 +142,20 @@ app.post('/like-product', (req, res)=>{
 
 app.post('/add-product',upload.single('pimage'), (req, res) => {
 console.log(req.body)
- const pname = req.body.pname;
+
+
+ const plat = req.body.Latitude;
+ const plong = req.body.Longitude;
+ const pname = req.body.pname
  const pcategory = req.body.pcategory;
  const pdescription = req.body. pdescription;
  const pprice = req.body.pprice;
  const pimage = req.file.path;
  const addedBy = req.body.userId;
  console.log(req.body.userId)
-
- const product = new Product({pname , pcategory , pdescription ,  pprice , pimage , addedBy})
+ console.log({pLoc : {type:'point' , coordinates:[ plat , plong]}})
+ const product = new Product({pname , pcategory , pdescription ,  pprice , pimage , addedBy 
+ })
   product.save()
   .then(() =>{
     res.send({message:"product uploaded"})

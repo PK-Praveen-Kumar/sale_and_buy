@@ -27,25 +27,27 @@ const Add_product = () => {
     const handleapi =() => {
         navigator.geolocation.getCurrentPosition(
             (position) => {
-              console.log('Latitude:', position.coords.latitude);
-              console.log('Longitude:', position.coords.longitude);
-            })
+                const formdata = new FormData();
+                formdata.append('Latitude', position.coords.latitude);
+                formdata.append('Longitude', position.coords.longitude);
+                formdata.append("pname" , pname)
+                formdata.append("pcategory", pcategory)
+                formdata.append("pdescription" , pdescription)
+                formdata.append("pprice" , pprice)
+                formdata.append("pimage" , pimage)
+                formdata.append('userId' , localStorage.getItem('userId'))
+                const url = 'http://localhost:4000/add-product'
+                axios.post(url,formdata)
+                .then((res) => {
+                    console.log(res)
+                }) .catch((err) =>{
+                    console.log(err)
+                })
+                })
+            }
 
-        const formdata = new FormData();
-        formdata.append("pname" , pname)
-        formdata.append("pcategory", pcategory)
-        formdata.append("pdescription" , pdescription)
-        formdata.append("pprice" , pprice)
-        formdata.append("pimage" , pimage)
-        formdata.append('userId' , localStorage.getItem('userId'))
-        const url = 'http://localhost:4000/add-product'
-        axios.post(url,formdata)
-        .then((res) => {
-                console.log(res)
-        }) .catch((err) =>{
-                console.log(err)
-        })
-    }
+        
+        
     console.log(localStorage.getItem('userId'))
 
     const onOptionChangeHandler = (event) => {
@@ -75,14 +77,6 @@ const Add_product = () => {
                     );
                 })}
             </select>
-
-    
-
-            {/* <label htmlFor="pcategory">Product Category</label><br />
-            <input type="text" name="product_categoty" id='pcategory' value={pcategory} onChange={(e) => {
-                setpcategory(e.target.value)
-            }} />
-         */}
         </div>
         <div>
             <label htmlFor="pdesc">Product Description</label> <br />
