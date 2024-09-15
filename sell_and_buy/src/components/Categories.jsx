@@ -8,7 +8,7 @@ function categories(props) {
         {
            CategoryList && CategoryList.length > 0 && CategoryList.map((items , index) => {
             return(
-                <button onClick={ () => navigate('/categorie/'+items) } key={index} > {items} </button>
+                <button onClick={ () => navigate('/categorie/'+ items) } key={index} > {items} </button>
             )
            })
         }

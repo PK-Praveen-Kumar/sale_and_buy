@@ -51,33 +51,40 @@ const User = mongoose.model('User', {
   });
 
 
-// let schema = new mongoose.Schema({
 
- 
-// })
-// schema.index({pLoc: '2dsphere'})
 
-const Product = mongoose.model('Product', {
+const schema = new mongoose.Schema({
   pname: String,
-  pcategory: String ,
-  pdescription: String ,
-  pprice : String ,
-  pimage : String ,
-  addedBy: mongoose.Schema.Types.ObjectId ,
-  pLoc  : {
-    type :{
+  pcategory: String,
+  pdescription: String,
+  pprice: Number, // Changed from String to Number
+  pimage: String,
+  addedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }, // Assuming there's a User model
+  pLoc: {
+    type: {
       type: String,
-      enum:['point'],
-      default:'point'
+      enum: ['Point'], // Capitalized 'Point' to match GeoJSON specification
+      default: 'Point'
     },
-    coordinates : {
-        type :[Number]
-
+    coordinates: {
+      type: [Number],
+      required: true, // Ensure coordinates are provided
+      validate: {
+        validator: function(arr) {
+          return arr.length === 2; // Validate that there are exactly 2 coordinates
+        },
+        message: 'Coordinates should be an array of 2 numbers'
+      }
     }
   }
-})
+}, {
+  timestamps: true // Automatically adds createdAt and updatedAt fields
+});
 
+// Ensure indexing for GeoJSON
+schema.index({ pLoc: '2dsphere' });
 
+const Product = mongoose.model('Product', schema);
 
 app.get('/', (req, res) => {
   res.send('Hello Honey!')
@@ -153,8 +160,9 @@ console.log(req.body)
  const pimage = req.file.path;
  const addedBy = req.body.userId;
  console.log(req.body.userId)
- console.log({pLoc : {type:'point' , coordinates:[ plat , plong]}})
- const product = new Product({pname , pcategory , pdescription ,  pprice , pimage , addedBy 
+ console.log({pLoc : {type:'Point' , coordinates:[ plat , plong]}})
+ const product = new Product({pname , pcategory , pdescription ,  pprice , pimage , addedBy ,
+  pLoc : {type:'Point' , coordinates:[ plat , plong]}
  })
   product.save()
   .then(() =>{
@@ -202,13 +210,27 @@ app.get('/get-user/:uId' , (req , res) =>{
 
 app.get('/search', (req , res) => {
   let search = req.query.search
+  let longitude = req.query.loc.split(',')[0]
+  let latitude = req.query.loc.split(',')[1]
+
+  console.log(search)
   Product.find({
-    $or :[
-      {pname : {$regex : search}},
-      {pprice : {$regex : search}},
-      {pdescription : {$regex : search}},
-      {pcategory : {$regex : search}},
-    ]
+  //  $or:[
+    //  { pname: { $regex: search }},
+    //  {pdescription : {$regex : search}},
+    //  {pcategory : {$regex : search}}
+    // ],
+    pname: { $regex: search, $options: 'i' },
+    pLoc: {
+      $nearSphere: {
+        $geometry: {
+          type: 'Point',
+          coordinates: [Number(longitude), Number(latitude)],
+        },
+        $maxDistance: 500 * 1000,  // Convert radius from kilometers to meters
+      },
+    },
+    
   })
   .then((result) =>{
     console.log(result , "user data")

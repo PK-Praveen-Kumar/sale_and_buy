@@ -36,7 +36,7 @@ const Home = () => {
   }
 
   const handleclick =() => {
-    const url = 'http://localhost:4000/search?search=' + search
+    const url = 'http://localhost:4000/search?search=' + search + '&loc=' + localStorage.getItem('userLoc')
     axios.get(url)
         .then((res) => {
                 console.log(res.data.product)
@@ -97,7 +97,7 @@ const Home = () => {
           <button onClick={() => refrush() }>refrush</button>
           </div >
         )}
-    {products.map((item , index) => {
+    {products && products.map((item , index) => {
       return (
          <div onClick={() => handleProduct(item._id)} key={index} >
           <img src={'http://localhost:4000/' + item.pimage} width="100px" />

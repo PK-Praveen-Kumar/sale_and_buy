@@ -20,7 +20,7 @@ const Add_product = () => {
 
     
     const options = [
-        'bike' , 'Electronics' , 'cloth' , 'sale' , 'mobiles','other~'
+        'bike' , 'Electronics' , 'cloth' , 'sale' , 'mobiles','other'
     ];
   
     
